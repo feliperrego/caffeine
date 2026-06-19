@@ -79,4 +79,48 @@ final class CaffeineControllerTests: XCTestCase {
         controller.start(preset: .minutes15)
         XCTAssertGreaterThan(count, 0)
     }
+
+    func testHandleProcessExitIsIdempotent() {
+        let controller = CaffeineController(processFactory: { FakeCaffeinateProcess() })
+        var count = 0
+        controller.start(preset: .minutes15)
+        controller.onStateChange = { count += 1 }
+        controller.handleProcessExit()
+        XCTAssertFalse(controller.isActive)
+        let countAfterFirstExit = count
+        XCTAssertGreaterThan(countAfterFirstExit, 0)
+        controller.handleProcessExit()
+        XCTAssertEqual(count, countAfterFirstExit)
+        XCTAssertFalse(controller.isActive)
+    }
+
+    func testTerminationHandlerHopResetsStateAsynchronously() async {
+        let fake = FakeCaffeinateProcess()
+        let controller = CaffeineController(processFactory: { fake })
+        controller.start(preset: .minutes15)
+        XCTAssertTrue(controller.isActive)
+
+        fake.simulateExit()
+
+        var iterations = 0
+        while controller.isActive && iterations < 1000 {
+            await Task.yield()
+            iterations += 1
+        }
+
+        XCTAssertFalse(controller.isActive)
+    }
+
+    func testTogglingDifferentPresetTerminatesPreviousProcess() {
+        var fakes: [FakeCaffeinateProcess] = []
+        let controller = CaffeineController(processFactory: {
+            let f = FakeCaffeinateProcess()
+            fakes.append(f)
+            return f
+        })
+        controller.toggle(preset: .minutes15)
+        controller.toggle(preset: .hour1)
+        XCTAssertEqual(fakes.count, 2)
+        XCTAssertTrue(fakes[0].terminateCalled)
+    }
 }
