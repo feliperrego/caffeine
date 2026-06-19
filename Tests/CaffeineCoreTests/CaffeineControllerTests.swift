@@ -77,7 +77,7 @@ final class CaffeineControllerTests: XCTestCase {
         var count = 0
         controller.onStateChange = { count += 1 }
         controller.start(preset: .minutes15)
-        XCTAssertGreaterThan(count, 0)
+        XCTAssertEqual(count, 1)
     }
 
     func testHandleProcessExitIsIdempotent() {

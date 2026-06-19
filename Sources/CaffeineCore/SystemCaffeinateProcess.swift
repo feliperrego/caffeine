@@ -12,7 +12,10 @@ public final class SystemCaffeinateProcess: CaffeinateProcess {
     public func launch(arguments: [String], terminationHandler: @escaping @Sendable () -> Void) {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/caffeinate")
-        process.arguments = arguments
+        // `-w <ownPID>` ties the subprocess lifetime to this app's process so a crash,
+        // SIGKILL, or force-quit (which skips applicationWillTerminate) can't orphan caffeinate.
+        let finalArgs = arguments + ["-w", String(ProcessInfo.processInfo.processIdentifier)]
+        process.arguments = finalArgs
         process.terminationHandler = { _ in terminationHandler() }
         do {
             try process.run()

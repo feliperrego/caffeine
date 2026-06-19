@@ -27,3 +27,11 @@ To install, drag `Caffeine.app` into `/Applications`.
 swift test      # run unit tests
 swift run Caffeine   # run without bundling
 ```
+
+## Known limitations
+
+- The app uses the default system app icon in Finder / Login Items (no custom
+  `.icns` bundled yet). The menubar icon itself is an SF Symbol and works.
+- Changing the keep-awake mode in Settings applies to the next activation; if
+  a timer is already running, the current session keeps the mode it started
+  with.
