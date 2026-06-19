@@ -1,13 +1,19 @@
-<img src="docs/icon.png" width="128" align="right" alt="Caffeine app icon">
+<p align="center">
+  <img src="docs/icon.png" width="120" alt="Caffeine app icon">
+</p>
 
-# Caffeine
+<h1 align="center">Caffeine</h1>
 
-A macOS menubar app to manage the `caffeinate` command — keep your Mac awake
-with preset timers (15 min, 30 min, 1 hour, Infinite).
+<p align="center">
+  A macOS menubar app to manage the <code>caffeinate</code> command — keep your
+  Mac awake with preset timers (15 min, 30 min, 1 hour, Infinite).
+</p>
 
 ## Screenshot
 
-<img src="docs/screenshot.png" width="330" alt="Caffeine menubar menu">
+<p align="center">
+  <img src="docs/screenshot.png" width="330" alt="Caffeine menubar menu">
+</p>
 
 ## Build
 
