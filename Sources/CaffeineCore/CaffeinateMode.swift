@@ -11,8 +11,8 @@ public enum CaffeinateMode: String, CaseIterable, Sendable {
 
     public var title: String {
         switch self {
-        case .displayOnly: return "Só a tela"
-        case .displaySystem: return "Tela + sistema"
+        case .displayOnly: return "Display only"
+        case .displaySystem: return "Display + system"
         }
     }
 }
