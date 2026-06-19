@@ -48,3 +48,7 @@ To change the app icon, replace `Resources/AppIcon.png` (1024×1024) and rerun
 - Changing the keep-awake mode in Settings applies to the next activation; if
   a timer is already running, the current session keeps the mode it started
   with.
+
+## License
+
+Released under the [MIT License](LICENSE).
