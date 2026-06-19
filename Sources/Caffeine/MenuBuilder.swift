@@ -9,6 +9,7 @@ final class MenuBuilder: NSObject {
     private let preferences: Preferences
     private let countdownItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
     private var presetItems: [(preset: CaffeinatePreset, item: NSMenuItem)] = []
+    private var settingsWindow: SettingsWindowController?
 
     init(controller: CaffeineController, preferences: Preferences) {
         self.controller = controller
@@ -70,7 +71,11 @@ final class MenuBuilder: NSObject {
     }
 
     @objc private func openSettings() {
-        // Wired in Task 7.
+        if settingsWindow == nil {
+            settingsWindow = SettingsWindowController(preferences: preferences, controller: controller)
+        }
+        settingsWindow?.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     @objc private func quit() {
